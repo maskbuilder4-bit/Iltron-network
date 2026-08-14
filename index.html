@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The iltron Lounge | Exclusive Digital Real Estate</title>
+    <style>
+        :root {
+            --bg-deep: #0a0a0c;
+            --bg-card: #141418;
+            --bg-card-hover: #1c1c24;
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa8c2c;
+            --text-main: #f5f5f7;
+            --text-muted: #8e8e93;
+            --border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .dashboard-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .brand-logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .cta-trigger {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: #000;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-trigger:active {
+            transform: scale(0.96);
+        }
+
+        .hero-banner {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .hero-banner h1 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-banner p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Search & Filter Toolbar */
+        .toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .toolbar {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        @media (min-width: 768px) {
+            .search-input {
+                max-width: 300px;
+            }
+        }
+
+        .search-input:focus {
+            border-color: var(--gold-primary);
+        }
+
+        /* A-Z Alphabet Filter Bar */
+        .alphabet-bar {
+            display: flex;
+            overflow-x: auto;
+            gap: 6px;
+            padding-bottom: 6px;
+            scrollbar-width: none;
+        }
+
+        .alphabet-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .alpha-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            min-width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .alpha-btn:hover, .alpha-btn.active {
+            background: var(--gold-primary);
+            color: #000;
+            border-color: var(--gold-primary);
+        }
+
+        /* Dashboard Grid System */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 640px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Sponsor Card */
+        .sponsor-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sponsor-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--gold-primary);
+            transform: translateY(-2px);
+        }
+
+        .sponsor-badge-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            background: #222;
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--gold-primary);
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sponsor-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .sponsor-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .sponsor-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sponsor-category {
+            font-size: 0.65rem;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .sponsor-url {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        @media (min-width: 640px) {
+            .modal-overlay {
+                align-items: center;
+            }
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 450px;
+            padding: 24px;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @media (min-width: 640px) {
+            .modal-content {
+                border-radius: 16px;
+                transform: translateY(20px);
+            }
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            background: var(--bg-deep);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--gold-primary);
+        }
+
+        .modal-submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.03);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header>
+            <div class="brand-logo">iltron Network</div>
+            <button class="cta-trigger" id="openModalBtn">+ Secure Spot (₹90)</button>
+        </header>
+
+        <!-- Hero -->
+        <div class="hero-banner">
+            <h1>Live Sponsor Directory</h1>
+            <p>Permanent placement instantly deployed upon verification.</p>
+        </div>
+
+        <!-- Search Bar & A-Z Quick Filters -->
+        <div class="toolbar">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by site name...">
+            <div class="alphabet-bar" id="alphabetBar">
+                <button class="alpha-btn active" data-letter="ALL">All</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid displaying elements -->
+        <div class="dashboard-grid" id="dashboardGrid"></div>
+
+        <footer>
+            Secured by Razorpay • Encrypted Infrastructure
+        </footer>
+    </div>
+
+    <!-- Modal for Single-Button Flow -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Claim Your Placement</h3>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="secureForm" onsubmit="return false;">
+                <div class="input-group">
+                    <label>Site Name</label>
+                    <input type="text" id="siteName" required placeholder="e.g. Apex Studio">
+                </div>
+                <div class="input-group">
+                    <label>Website URL</label>
+                    <input type="url" id="websiteUrl" required placeholder="https://example.com">
+                </div>
+                <div class="input-group">
+                    <label>Logo Image URL</label>
+                    <input type="url" id="logoUrl" required placeholder="https://example.com/logo.png">
+                </div>
+                <div class="input-group">
+                    <label>Category (Razorpay Compliance Approved)</label>
+                    <select id="siteCategory" required>
+                        <option value="SaaS & Tech">SaaS & Tech</option>
+                        <option value="Software Tools">Software Tools</option>
+                        <option value="Digital Agency">Digital Agency</option>
+                        <option value="E-Commerce">E-Commerce</option>
+                        <option value="Fintech & Banking">Fintech & Banking</option>
+                        <option value="Education & EdTech">Education & EdTech</option>
+                        <option value="Content & Media">Content & Media</option>
+                        <option value="Cloud Infrastructure">Cloud Infrastructure</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Marketing & SEO">Marketing & SEO</option>
+                        <option value="Design & Creatives">Design & Creatives</option>
+                        <option value="Productivity">Productivity</option>
+                        <option value="Consulting Services">Consulting Services</option>
+                        <option value="Developer Tools">Developer Tools</option>
+                        <option value="Analytics & BI">Analytics & BI</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="Hardware & Devices">Hardware & Devices</option>
+                        <option value="Networking">Networking</option>
+                        <option value="Enterprise IT">Enterprise IT</option>
+                        <option value="General Portfolio">General Portfolio</option>
+                    </select>
+                </div>
+                <button type="button" class="modal-submit-btn" id="payBtn">Proceed to Razorpay (₹90)</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Preset mock data with compliant categories
+        let defaultSponsors = [
+            { name: "Vanguard Capital", url: "https://vanguard.example", logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&auto=format&fit=crop&q=80", category: "Fintech & Banking" },
+            { name: "Obsidian Tech", url: "https://obsidian.example", logo: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=100&auto=format&fit=crop&q=80", category: "SaaS & Tech" },
+            { name: "Aether Dynamics", url: "https://aether.example", logo: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=100&auto=format&fit=crop&q=80", category: "Artificial Intelligence" },
+            { name: "Krona Holdings", url: "https://krona.example", logo: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=100&auto=format&fit=crop&q=80", category: "Cloud Infrastructure" }
+        ];
+
+        let currentFilterLetter = "ALL";
+        let searchQuery = "";
+
+        // Build A-Z Alphabet Filter Navigation
+        const alphabetBar = document.getElementById('alphabetBar');
+        for (let i = 65; i <= 90; i++) {
+            const char = String.fromCharCode(i);
+            const btn = document.createElement('button');
+            btn.className = 'alpha-btn';
+            btn.dataset.letter = char;
+            btn.textContent = char;
+            btn.onclick = () => {
+                document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilterLetter = char;
+                filterAndRender();
+            };
+            alphabetBar.appendChild(btn);
+        }
+
+        alphabetBar.querySelector('[data-letter="ALL"]').onclick = function() {
+            document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilterLetter = "ALL";
+            filterAndRender();
+        };
+
+        document.getElementById('searchInput').oninput = function(e) {
+            searchQuery = e.target.value.toLowerCase().trim();
+            filterAndRender();
+        };
+
+        // Strict URL sanitizer & XSS defense check
+        function isValidHttpUrl(string) {
+            try {
+                const url = new URL(string);
+                return url.protocol === "http:" || url.protocol === "https:";
+            } catch (_) {
+                return false;
+            }
+        }
+
+        // Safe DOM Node creation defending against XSS & SQLi payloads
+        function filterAndRender() {
+            const grid = document.getElementById('dashboardGrid');
+            grid.innerHTML = '';
+
+            const filtered = defaultSponsors.filter(item => {
+                const name = item.name || item.site_name || "";
+                const matchesSearch = name.toLowerCase().includes(searchQuery);
+                const firstLetter = name.charAt(0).toUpperCase();
+                const matchesLetter = currentFilterLetter === "ALL" || firstLetter === currentFilterLetter;
+                return matchesSearch && matchesLetter;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">No partner listings match your criteria.</div>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('a');
+                card.className = 'sponsor-card';
+                
+                const rawUrl = item.url || item.website_url;
+                const safeUrl = isValidHttpUrl(rawUrl) ? rawUrl : '#';
+                card.href = safeUrl;
+                card.target = '_blank';
+                card.rel = 'noopener noreferrer';
+
+                const img = document.createElement('img');
+                img.className = 'sponsor-badge-logo';
+                img.src = item.logo || item.logo_url;
+                img.alt = item.name || item.site_name || 'Sponsor';
+                img.onerror = function() { this.style.display = 'none'; };
+
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'sponsor-info';
+
+                const topRow = document.createElement('div');
+                topRow.className = 'sponsor-top-row';
+
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'sponsor-name';
+                nameDiv.textContent = item.name || item.site_name || 'Verified Partner';
+
+                const catDiv = document.createElement('div');
+                catDiv.className = 'sponsor-category';
+                catDiv.textContent = item.category || 'General';
+
+                topRow.appendChild(nameDiv);
+                topRow.appendChild(catDiv);
+
+                const urlDiv = document.createElement('div');
+                urlDiv.className = 'sponsor-url';
+                try {
+                    urlDiv.textContent = new URL(safeUrl).hostname;
+                } catch(e) {
+                    urlDiv.textContent = safeUrl;
+                }
+
+                infoDiv.appendChild(topRow);
+                infoDiv.appendChild(urlDiv);
+
+                card.appendChild(img);
+                card.appendChild(infoDiv);
+                grid.appendChild(card);
+            });
+        }
+
+        filterAndRender();
+
+        // Modal Controls
+        const modal = document.getElementById('paymentModal');
+        document.getElementById('openModalBtn').onclick = () => modal.classList.add('active');
+        document.getElementById('closeModalBtn').onclick = () => modal.classList.remove('active');
+        window.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); }
+
+        // Secure Razorpay Direct Redirection Handler
+        document.getElementById('payBtn').onclick = function () {
+            const siteName = document.getElementById('siteName').value.trim();
+            const websiteUrl = document.getElementById('websiteUrl').value.trim();
+            const logoUrl = document.getElementById('logoUrl').value.trim();
+            const siteCategory = document.getElementById('siteCategory').value;
+
+            if (!siteName || !websiteUrl || !logoUrl) {
+                alert('Please complete all form inputs.');
+                return;
+            }
+
+            if (!isValidHttpUrl(websiteUrl) || !isValidHttpUrl(logoUrl)) {
+                alert('Please enter functional HTTP/HTTPS URLs.');
+                return;
+            }
+
+            // Secure local temporary addition for immediate layout feedback before payment redirect
+            defaultSponsors.unshift({ name: siteName, url: websiteUrl, logo: logoUrl, category: siteCategory });
+            filterAndRender();
+            
+            modal.classList.remove('active');
+            
+            // Open your exact razorpay payment page link safely in a new tab
+            window.open("https://rzp.io/rzp/iQBkvgE", "_blank");
+        };
+    </script>
+</body>
+</html>
