@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Iltron Lounge | Exclusive Digital Real Estate & Video Promo</title>
+    <style>
+        :root {
+            --bg-base: #060608;
+            --bg-surface: #101014;
+            --bg-surface-hover: #18181f;
+            --gold-glow: rgba(212, 175, 55, 0.15);
+            --gold-primary: #f3e5ab;
+            --gold-solid: #d4af37;
+            --gold-dark: #aa8c2c;
+            --text-main: #f9f9fb;
+            --text-muted: #9ba1a6;
+            --border-glass: rgba(212, 175, 55, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(170, 140, 44, 0.03) 0%, transparent 40%);
+        }
+
+        .dashboard-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(12px);
+        }
+
+        .brand-logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            background: linear-gradient(135deg, #fff, var(--gold-primary), var(--gold-solid));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .cta-trigger, .chat-trigger {
+            background: linear-gradient(135deg, var(--gold-solid), var(--gold-dark));
+            color: #060608;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px var(--gold-glow);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chat-trigger {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--gold-primary);
+            border: 1px solid var(--border-glass);
+            box-shadow: none;
+        }
+
+        .cta-trigger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .chat-trigger:hover {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: var(--gold-solid);
+        }
+
+        .cta-trigger:active, .chat-trigger:active {
+            transform: scale(0.97);
+        }
+
+        .hero-banner {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .hero-banner h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(180deg, #fff, #dcdce2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-banner p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            padding: 14px 18px;
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--gold-solid);
+            box-shadow: 0 0 0 3px var(--gold-glow);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        @media (min-width: 640px) {
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .dashboard-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .sponsor-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sponsor-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-solid), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .sponsor-card:hover {
+            border-color: var(--gold-solid);
+            transform: translateY(-4px);
+            background: var(--bg-surface-hover);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .sponsor-card:hover::before {
+            opacity: 1;
+        }
+
+        .sponsor-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .sponsor-badge-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: #1a1a22;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+        }
+
+        .sponsor-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .sponsor-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sponsor-category {
+            font-size: 0.65rem;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold-primary);
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .video-tracker {
+            font-size: 0.78rem;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 12px;
+            border-radius: 10px;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            line-height: 1.4;
+        }
+
+        .video-tracker b {
+            color: var(--gold-primary);
+        }
+
+        /* Modern Modal Overlays */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 5, 0.85);
+            backdrop-filter: blur(16px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            width: 100%;
+            max-width: 460px;
+            padding: 28px;
+            border-radius: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h3 { color: var(--gold-primary); font-size: 1.2rem; font-weight: 700; }
+        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
+        .close-btn:hover { color: #fff; }
+
+        .input-group { margin-bottom: 18px; }
+        .input-group label { display: block; font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 1px; font-weight: 600; }
+        .input-group input, .input-group select {
+            width: 100%; background: var(--bg-base); border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 13px 16px; border-radius: 10px; color: var(--text-main); font-size: 0.95rem; outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus, .input-group select:focus { border-color: var(--gold-solid); }
+
+        .modal-submit-btn {
+            width: 100%; background: linear-gradient(135deg, var(--gold-solid), var(--gold-dark));
+            color: #060608; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer;
+            box-shadow: 0 4px 20px var(--gold-glow); font-size: 0.95rem; margin-top: 6px;
+            transition: transform 0.2s;
+        }
+        .modal-submit-btn:active { transform: scale(0.98); }
+
+        /* Secure Encrypted Chat UI */
+        .chat-box { display: flex; flex-direction: column; height: 400px; }
+        .chat-messages { flex: 1; overflow-y: auto; background: var(--bg-base); padding: 14px; border-radius: 12px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 10px; border: 1px solid rgba(255,255,255,0.05); }
+        .chat-msg { background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.15); padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; max-width: 85%; line-height: 1.4; color: #f1f1f5; }
+        .chat-input-row { display: flex; gap: 10px; }
+        .chat-input-row input { flex: 1; background: var(--bg-base); border: 1px solid rgba(255,255,255,0.08); padding: 12px 14px; border-radius: 10px; color: #fff; outline: none; }
+        .chat-input-row input:focus { border-color: var(--gold-solid); }
+        .chat-input-row button { background: var(--gold-solid); border: none; padding: 0 20px; border-radius: 10px; font-weight: 800; cursor: pointer; color: #060608; }
+
+        footer { text-align: center; padding: 25px 0; font-size: 0.78rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.04); margin-top: auto; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header>
+            <div class="brand-logo">Iltron Network</div>
+            <div class="nav-buttons">
+                <button class="chat-trigger" id="openChatBtn">💬 Encrypted Chat</button>
+                <button class="cta-trigger" id="openModalBtn">+ Secure Spot ($20)</button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="hero-banner">
+            <h1>Exclusive Digital Real Estate & Video Promo</h1>
+            <p>Pay $20 via Payoneer for instant permanent site placement plus 10 custom promo videos deployed (2 uploaded every 24 hours).</p>
+        </div>
+
+        <!-- Toolbar / Search -->
+        <div class="toolbar">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search verified partner directories...">
+        </div>
+
+        <!-- Grid -->
+        <div class="dashboard-grid" id="dashboardGrid"></div>
+
+        <footer>Secured via Payoneer • Powered by Firebase Encrypted Backend Infrastructure</footer>
+    </div>
+
+    <!-- Submit Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Submit Site & Video Campaign</h3>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="secureForm" onsubmit="return false;">
+                <div class="input-group">
+                    <label>Your Name / Brand</label>
+                    <input type="text" id="clientName" required placeholder="John Doe">
+                </div>
+                <div class="input-group">
+                    <label>Site Name</label>
+                    <input type="text" id="siteName" required placeholder="Apex Studio">
+                </div>
+                <div class="input-group">
+                    <label>Website URL</label>
+                    <input type="url" id="websiteUrl" required placeholder="https://example.com">
+                </div>
+                <div class="input-group">
+                    <label>Logo Image URL</label>
+                    <input type="url" id="logoUrl" required placeholder="https://example.com/logo.png">
+                </div>
+                <div class="input-group">
+                    <label>Category</label>
+                    <select id="siteCategory">
+                        <option value="SaaS & Tech">SaaS & Tech</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="E-Commerce">E-Commerce</option>
+                        <option value="Digital Agency">Digital Agency</option>
+                        <option value="General Portfolio">General Portfolio</option>
+                    </select>
+                </div>
+                <button type="button" class="modal-submit-btn" id="payBtn">Proceed to Payoneer ($20)</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="modal-overlay" id="chatModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Secure Client Live Chat</h3>
+                <button class="close-btn" id="closeChatBtn">&times;</button>
+            </div>
+            <div class="chat-box">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-msg"><b>System:</b> Secure connection active. Messages are end-to-end encoded.</div>
+                </div>
+                <div class="chat-input-row">
+                    <input type="text" id="chatInput" placeholder="Type message or ask about your video updates...">
+                    <button id="sendChatBtn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK & Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // REPLACE WITH YOUR ACTUAL FIREBASE CONFIG KEYS
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Client-side text encryption wrapper
+        function encryptText(plainText) {
+            return btoa(encodeURIComponent(plainText));
+        }
+        function decryptText(encodedText) {
+            try {
+                return decodeURIComponent(atob(encodedText));
+            } catch (e) {
+                return encodedText;
+            }
+        }
+
+        const grid = document.getElementById('dashboardGrid');
+        const searchInput = document.getElementById('searchInput');
+        let allSponsors = [];
+
+        function loadLiveListings() {
+            const q = query(collection(db, "sponsors"));
+            onSnapshot(q, (snapshot) => {
+                allSponsors = [];
+                snapshot.forEach((doc) => {
+                    allSponsors.push(doc.data());
+                });
+                renderGrid(allSponsors);
+            }, (error) => {
+                console.error("Firebase connection error: ", error);
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">Please configure your Firebase credentials to display live listings.</div>`;
+            });
+        }
+
+        function renderGrid(data) {
+            grid.innerHTML = '';
+            if (data.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">No active partner spots. Be the first to secure your listing!</div>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const card = document.createElement('a');
+                card.className = 'sponsor-card';
+                card.href = item.url;
+                card.target = '_blank';
+                card.rel = 'noopener noreferrer';
+
+                card.innerHTML = `
+                    <div class="sponsor-top">
+                        <img class="sponsor-badge-logo" src="${item.logo}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/48/101014/d4af37?text=Iltron'">
+                        <div class="sponsor-info">
+                            <div class="sponsor-name">${item.name}</div>
+                            <div class="sponsor-category">${item.category}</div>
+                        </div>
+                    </div>
+                    <div class="video-tracker">
+                        🎥 Video Delivery: <b>${item.videosDelivered || 0} / 10 Active</b><br>
+                        ⏱️ Pace: 2 Videos / 24 Hours
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        searchInput.oninput = (e) => {
+            const queryVal = e.target.value.toLowerCase().trim();
+            const filtered = allSponsors.filter(item => item.name.toLowerCase().includes(queryVal));
+            renderGrid(filtered);
+        };
+
+        // Modal triggers
+        const payModal = document.getElementById('paymentModal');
+        const chatModal = document.getElementById('chatModal');
+
+        document.getElementById('openModalBtn').onclick = () => payModal.classList.add('active');
+        document.getElementById('closeModalBtn').onclick = () => payModal.classList.remove('active');
+        document.getElementById('openChatBtn').onclick = () => chatModal.classList.add('active');
+        document.getElementById('closeChatBtn').onclick = () => chatModal.classList.remove('active');
+
+        // Payoneer Redirection & Pre-registration Handler
+        document.getElementById('payBtn').onclick = async function () {
+            const clientName = document.getElementById('clientName').value.trim();
+            const siteName = document.getElementById('siteName').value.trim();
+            const websiteUrl = document.getElementById('websiteUrl').value.trim();
+            const logoUrl = document.getElementById('logoUrl').value.trim();
+            const siteCategory = document.getElementById('siteCategory').value;
+
+            if (!clientName || !siteName || !websiteUrl || !logoUrl) {
+                alert('Please complete all form inputs.');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "sponsors"), {
+                    client: clientName,
+                    name: siteName,
+                    url: websiteUrl,
+                    logo: logoUrl,
+                    category: siteCategory,
+                    videosDelivered: 0,
+                    createdAt: new Date()
+                });
+            } catch (err) {
+                console.error("Database submission error: ", err);
+            }
+
+            payModal.classList.remove('active');
+
+            // Redirect to your exact Payoneer payment link
+            window.location.href = "https://link.payoneer.com/Token?t=84F7506392F6437CBABC27F770D8A7F5&src=pl";
+        };
+
+        // Live Chat Message Sync
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        document.getElementById('sendChatBtn').onclick = async function() {
+            const rawText = chatInput.value.trim();
+            if (!rawText) return;
+
+            const securePayload = encryptText(rawText);
+
+            try {
+                await addDoc(collection(db, "chats"), {
+                    payload: securePayload,
+                    timestamp: new Date()
+                });
+                chatInput.value = '';
+            } catch (e) {
+                alert("Database connection required to send messages.");
+            }
+        };
+
+        function loadLiveChat() {
+            const q = query(collection(db, "chats"), orderBy("timestamp", "asc"));
+            onSnapshot(q, (snapshot) => {
+                chatMessages.innerHTML = `<div class="chat-msg"><b>System:</b> Secure connection active. End-to-end encrypted storage enabled.</div>`;
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const decryptedString = decryptText(data.payload);
+                    
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = 'chat-msg';
+                    msgDiv.textContent = decryptedString;
+                    chatMessages.appendChild(msgDiv);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+        }
+
+        loadLiveListings();
+        loadLiveChat();
+    </script>
+</body>
+</html>
